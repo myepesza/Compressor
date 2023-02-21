@@ -1,0 +1,33 @@
+#Importamos PILLOW para la compresion de las imagenes
+from PIL import Image
+
+#Importamos os que nos permite leer los archivos que tenemos en la carpeta de descargas
+import os
+
+#Definimos donde estan esos archivos
+downloadsFolder = "/Users/PC/Downloads/"
+pictureFolder = "/Users/PC/OneDrive/Imágenes/Imagenes de descargas/"
+excelFolder = "/Users/PC/OneDrive/Documentos/Excel descargas/"
+pdfFolder = "/Users/PC/OneDrive/Documentos/Pdf descargas/"
+
+#Preguntamos si el archivo que estamos ejecutando lo estamos ejecutando directamente de la terminal, a esto le agregamod un for donde iteramos todos los archivos que llamaremos filename
+if __name__ == "__main__":
+    for filename in os.listdir(downloadsFolder):
+        naem, extension = os.path.splitext(downloadsFolder + filename)
+
+#Preguntamos si su extencion se encuentra en las seleccionadas, open no nos abre el archivo per nos permite manipularlo en el codigo agregamos el stren de compressed para comprimir
+#Con .save definimos donde queremos guardar los archivos con las extenciones seleccionadas
+#Con os.remove eliminamos los archivos que ya no necesitamos por que estan en un nuevo archivo
+        if  extension in [".jpg", ".jpge", ".png"]:
+            picture = Image.open(downloadsFolder + filename)
+            picture.save(pictureFolder + "compressed_"+filename, optimize=True, quality=60)
+
+        if extension in [".mp3"]:
+            musicFolder = "/Users/PC/Music/Audio descarga/"
+            os.rename(downloadsFolder + filename, musicFolder + filename)
+
+        if extension in [".xlsx"]:
+            os.rename(downloadsFolder + filename, excelFolder + filename)
+
+        if extension in [".pdf"]:
+            os.rename(downloadsFolder + filename, pdfFolder + filename)
